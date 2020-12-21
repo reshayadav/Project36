@@ -3,8 +3,11 @@ var dog, happydog;
 var dogImg, happyImg;
 var foodS, foodStock;
 var database;
-var bottle1;
 var milk=[];
+var foodObj;
+var feedTime , lastFed;
+var feed , addFood;
+
 
 function preload()
 {
@@ -22,29 +25,27 @@ function setup() {
   dog.scale = 0.3;
   dog.addImage(dogImg);
  
-  for(var j=40; j<=width; j=j+140){
-	milk.push(new Food(j,375,40));
-	}
+
+  feed = createButton("Feed the dog");
+  feed.position(700,95);
+  feed.mousePressed(feedDog);
+
+  addFood = createElement("Add Food");
+  addFood.position(800,95);
+  addFood.mousePressed(addFoods);
+ 
   
-  foodStock = database.ref("food");
-  foodStock.on("value", readStock);
+  // foodStock = database.ref("food");
+  // foodStock.on("value", readStock);
 }
 
 
 function draw() {  
 background(46,139,87);
 
-// bottle1.display();
 
- if(keyWentDown(UP_ARROW)){
- writeStock(foodS);
-  dog.addImage(happyImg);
 
-}
 
-for(var j=0; j< milk.length; j++){
-milk[j].display();
-}
 
   drawSprites();
 
@@ -56,25 +57,41 @@ milk[j].display();
 
 }
 
-function writeStock(x){
+// function writeStock(x){
  
 
-  if(x <= 0){
-    x=0;
-  }
+//   if(x <= 0){
+//     x=0;
+//   }
 
-  else{
-    x=x -1;
-  }
+//   else{
+//     x=x -1;
+//   }
 
-  database.ref("/").update({
-    food:x
+//   database.ref("/").update({
+//     food:x
+//   })
+// }
+
+
+// function readStock(data){
+//   foodS = data.val();
+
+// }
+
+function feedDog(){
+  dog.addImage(happyImg);
+
+  Food.updateFoodStock(Food.getFoodStock()-1);
+  database.ref('/').update({
+    Food : foodObj.getFoodStock(),
+    feedTime : hour()
   })
 }
 
-
-function readStock(data){
-  foodS = data.val();
-
+function addFoods(){
+  foodS++;
+  database.ref('/').update({
+    Food : foodS
+  })
 }
-
