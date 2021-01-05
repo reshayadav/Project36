@@ -3,14 +3,14 @@ class Food{
 
     
      
-        this.image= loadImage("../images/Milk.png");
+        this.image= loadImage("../../images/Milk.png");
       
 
     }
 
     display(){
       
-    //  var x=80,y=100;
+     var x=80,y=100;
 
      imageMode (CENTER);
      image(this.image,220,320,70,70);
@@ -29,20 +29,5 @@ class Food{
 
       
     }
-    getFoodStock(){
-      var foodRef = database.ref('food');
-    foodRef.on("value",(data)=>{
-      food = data.val();
-    })
-    }
-
-    updateFoodStock(count){
-      database.ref('/').update({
-        food : count
-      });
-    }
-
-    deductFood(){
-        
-    }
+  
 }
