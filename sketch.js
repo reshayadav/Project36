@@ -50,11 +50,17 @@ foodObj.display();
 
   drawSprites();
 
-  //add styles here
-   textSize(15);
-   fill (255);
-   stroke (2);
-   text("Note:  Press UP_ARROW Key To Feed The Dog", 30,30);
+ 
+   
+fill(255,255,254);
+textSize(15);
+if(lastFed>=12){
+  text("Last Feed : "+ lastFed%12 + " PM", 350,30);
+ }else if(lastFed==0){
+   text("Last Feed : 12 AM",350,30);
+ }else{
+   text("Last Feed : "+ lastFed + " AM", 350,30);
+ }
 
 }
 
@@ -74,16 +80,14 @@ function writeStock(x){
   })
 }
 
-
 function readStock(data){
-  foodS = data.val();
-
+  foodS=data.val();
+  foodObj.foodStock = foodS;
 }
-
 function feedDog(){
   dog.addImage(happyImg);
 
-  Food.updateFoodStock(Food.getFoodStock()-1);
+  foodObj.updateFoodStock(foodObj.getFoodStock()-1);
   database.ref('/').update({
     Food : foodObj.getFoodStock(),
     feedTime : hour()

@@ -1,9 +1,9 @@
 class Food{
-    constructor(foodStock,lastFed){
+    constructor(){
 
     
      
-        this.image= loadImage("../../images/Milk.png");
+        this.image= loadImage("../images/Milk.png");
       
 
     }
@@ -15,6 +15,9 @@ class Food{
      imageMode (CENTER);
      image(this.image,220,320,70,70);
 
+    //  for(var i=0; i<this.image; i++){
+    //   image(this.image,220,320,70,70);
+    //  }
      if(this.foodStock!=0){
        for(var i=0; i<this.foodStock; i++){
          if(i%10===0){
